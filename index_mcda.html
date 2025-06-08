@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCDA Métaux & Alliages - Guide Professionnel Food Safety</title>
+    <meta name="description" content="Guide professionnel complet des matériaux métalliques au contact alimentaire. Conforme CM/Res(2013)9 et réglementation DGCCRF.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .header .description {
+            font-size: 1rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            padding: 50px 40px;
+        }
+
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .slide-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .slide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .slide-card.aciers::before { background: linear-gradient(90deg, #3b82f6, #1e40af); }
+        .slide-card.aluminium::before { background: linear-gradient(90deg, #f59e0b, #ea580c); }
+        .slide-card.cuivre::before { background: linear-gradient(90deg, #b45309, #92400e); }
+        .slide-card.emailles::before { background: linear-gradient(90deg, #7c3aed, #5b21b6); }
+        .slide-card.autres::before { background: linear-gradient(90deg, #0f766e, #134e4a); }
+        .slide-card.reglementation::before { background: linear-gradient(90deg, #1e40af, #1e3a8a); }
+        .slide-card.methodes::before { background: linear-gradient(90deg, #7c2d12, #92400e); }
+        .slide-card.limites::before { background: linear-gradient(90deg, #1f2937, #111827); }
+
+        .slide-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide-card:hover::before {
+            height: 8px;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .slide-number.aciers { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+        .slide-number.aluminium { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+        .slide-number.cuivre { background: linear-gradient(135deg, #b45309, #92400e); }
+        .slide-number.emailles { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+        .slide-number.autres { background: linear-gradient(135deg, #0f766e, #134e4a); }
+        .slide-number.reglementation { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .slide-number.methodes { background: linear-gradient(135deg, #7c2d12, #92400e); }
+        .slide-number.limites { background: linear-gradient(135deg, #1f2937, #111827); }
+
+        .slide-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .slide-icon.aciers { color: #3b82f6; }
+        .slide-icon.aluminium { color: #f59e0b; }
+        .slide-icon.cuivre { color: #b45309; }
+        .slide-icon.emailles { color: #7c3aed; }
+        .slide-icon.autres { color: #0f766e; }
+        .slide-icon.reglementation { color: #1e40af; }
+        .slide-icon.methodes { color: #7c2d12; }
+        .slide-icon.limites { color: #1f2937; }
+
+        .slide-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .slide-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .slide-highlights {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .slide-highlights li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .slide-highlights li::before {
+            content: '•';
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .aciers .slide-highlights li::before { color: #3b82f6; }
+        .aluminium .slide-highlights li::before { color: #f59e0b; }
+        .cuivre .slide-highlights li::before { color: #b45309; }
+        .emailles .slide-highlights li::before { color: #7c3aed; }
+        .autres .slide-highlights li::before { color: #0f766e; }
+        .reglementation .slide-highlights li::before { color: #1e40af; }
+        .methodes .slide-highlights li::before { color: #7c2d12; }
+        .limites .slide-highlights li::before { color: #1f2937; }
+
+        .slide-button {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slide-button:hover {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            transform: translateY(-2px);
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .info-section h2 {
+            color: #1e40af;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .info-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .info-desc {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 768px) {
+            .slides-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .main-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-industry"></i> MCDA Métaux & Alliages</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires</p>
+            <p class="description">Guide complet de conformité réglementaire selon CM/Res(2013)9 et fiches DGCCRF v02</p>
+        </div>
+
+        <div class="main-content">
+            <div class="info-section">
+                <h2><i class="fas fa-info-circle"></i> À propos de cette documentation</h2>
+                <p>Cette série de diapositives couvre l'ensemble des métaux et alliages autorisés au contact alimentaire en Europe. Chaque présentation détaille les spécifications techniques, limites de migration et exigences réglementaires pour un usage professionnel en food safety.</p>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">📋</div>
+                        <div class="info-title">8 Diapositives</div>
+                        <div class="info-desc">Coverage complète par matériau</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">⚖️</div>
+                        <div class="info-title">Conformité UE</div>
+                        <div class="info-desc">Basé sur CM/Res(2013)9</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🔬</div>
+                        <div class="info-title">Données Techniques</div>
+                        <div class="info-desc">LMS, compositions, méthodes</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">👨‍💼</div>
+                        <div class="info-title">Usage Professionnel</div>
+                        <div class="info-desc">Consultants, auditeurs, IAA</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="color: #1e40af; margin-bottom: 30px; text-align: center; font-size: 2rem;">
+                <i class="fas fa-list"></i> Navigation des Présentations
+            </h2>
+
+            <div class="slides-grid">
+                <a href="aciers_inoxydables.html" class="slide-card aciers">
+                    <div class="slide-number aciers">1</div>
+                    <i class="fas fa-cogs slide-icon aciers"></i>
+                    <h3 class="slide-title">Aciers Inoxydables</h3>
+                    <p class="slide-description">Classifications séries 300/400, critères chrome ≥13%, traitements thermochimiques spéciaux</p>
+                    <ul class="slide-highlights">
+                        <li>AISI 304, 316, 321, 430, 420</li>
+                        <li>Critères composition arrêté 1976</li>
+                        <li>Traitements Kolsterising, Nivox</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="aluminium_alliages.html" class="slide-card aluminium">
+                    <div class="slide-number aluminium">2</div>
+                    <i class="fas fa-cube slide-icon aluminium"></i>
+                    <h3 class="slide-title">Aluminium & Alliages</h3>
+                    <p class="slide-description">Aluminium pur et alliages, restrictions pH acides, LMS 1 mg/kg temporaire ALARA</p>
+                    <ul class="slide-highlights">
+                        <li>EN AW-1050A, 3003, 5754, 6082</li>
+                        <li>LMS Al : 1,0 mg/kg (ALARA)</li>
+                        <li>Restrictions aliments acides</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="cuivre_alliages.html" class="slide-card cuivre">
+                    <div class="slide-number cuivre">3</div>
+                    <i class="fas fa-hammer slide-icon cuivre"></i>
+                    <h3 class="slide-title">Cuivre & Alliages</h3>
+                    <p class="slide-description">Cuivre pur, laitons, bronzes. Étamage obligatoire, LMS 5 mg/kg, interdiction aliments acides</p>
+                    <ul class="slide-highlights">
+                        <li>Cu-DHP, Cu-ETP, CuZn40, CuSn8</li>
+                        <li>Étamage obligatoire contact direct</li>
+                        <li>LMS Cu : 5,0 mg/kg</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="metaux_emailles.html" class="slide-card emailles">
+                    <div class="slide-number emailles">4</div>
+                    <i class="fas fa-palette slide-icon emailles"></i>
+                    <h3 class="slide-title">Métaux Émaillés</h3>
+                    <p class="slide-description">Fonte et acier émaillés, résistance écaillage, LMS Pb/Cd critiques</p>
+                    <ul class="slide-highlights">
+                        <li>EN-GJL-200, EN-GJS-500-7</li>
+                        <li>DC01EK, DC04EK aciers émaillés</li>
+                        <li>LMS Pb: 0,01 mg/kg, Cd: 0,005 mg/kg</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="autres_metaux.html" class="slide-card autres">
+                    <div class="slide-number autres">5</div>
+                    <i class="fas fa-gem slide-icon autres"></i>
+                    <h3 class="slide-title">Autres Métaux</h3>
+                    <p class="slide-description">Métaux précieux (Au/Ag), revêtements (Sn/Cr/Zn), alliages spéciaux (Ti/Nb/Ta)</p>
+                    <ul class="slide-highlights">
+                        <li>Or 99,9%, Argent 92,5%</li>
+                        <li>Étain fer blanc, Chrome dur</li>
+                        <li>Titane, Tantale applications spéciales</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="reglementation_generale.html" class="slide-card reglementation">
+                    <div class="slide-number reglementation">6</div>
+                    <i class="fas fa-balance-scale slide-icon reglementation"></i>
+                    <h3 class="slide-title">Cadre Réglementaire</h3>
+                    <p class="slide-description">Règlement CE 1935/2004 article 3, hiérarchie textes, évolution réglementaire chronologique</p>
+                    <ul class="slide-highlights">
+                        <li>Principe inertie article 3</li>
+                        <li>Hiérarchie UE > National > Guidance</li>
+                        <li>Timeline 1945-2017</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="methodes_essais.html" class="slide-card methodes">
+                    <div class="slide-number methodes">7</div>
+                    <i class="fas fa-microscope slide-icon methodes"></i>
+                    <h3 class="slide-title">Méthodes d'Essais</h3>
+                    <p class="slide-description">Protocoles ICP-MS, simulants, conditions temps/température, calculs S/V</p>
+                    <ul class="slide-highlights">
+                        <li>Hiérarchie: Denrées > Simulants > Composition</li>
+                        <li>Acide citrique 5g/L, eau artificielle</li>
+                        <li>Conditions 10j/40°C, 2h/70°C</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+
+                <a href="limites_migration.html" class="slide-card limites">
+                    <div class="slide-number limites">8</div>
+                    <i class="fas fa-table slide-icon limites"></i>
+                    <h3 class="slide-title">Limites de Migration</h3>
+                    <p class="slide-description">Tableau LMS complet CM/Res(2013)9, codes couleur toxicité, 22 éléments détaillés</p>
+                    <ul class="slide-highlights">
+                        <li>22 éléments avec LMS définies</li>
+                        <li>Codes couleur par niveau toxicité</li>
+                        <li>Fe: 40 mg/kg → Tl: 0,0001 mg/kg</li>
+                    </ul>
+                    <div class="slide-button">
+                        <i class="fas fa-play"></i> Ouvrir
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Documentation MCDA Métaux & Alliages</strong> - Conforme CM/Res(2013)9 et DGCCRF v02</p>
+            <p>© 2024 - Usage professionnel consultants food safety</p>
+        </div>
+    </div>
+</body>
+</html>
