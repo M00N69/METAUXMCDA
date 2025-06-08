@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuivre et Alliages - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #ea580c;
+        }
+
+        .intro-section h2 {
+            color: #9a3412;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 1px solid #f87171;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ef4444;
+        }
+
+        .warning-box h3 {
+            color: #dc2626;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-list {
+            list-style: none;
+            color: #7f1d1d;
+        }
+
+        .warning-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-list li::before {
+            content: '⚠️';
+            font-size: 1.2rem;
+        }
+
+        .alloys-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .alloy-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alloy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #b45309, #92400e);
+        }
+
+        .alloy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .alloy-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #9a3412;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metal-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .metal-item:last-child {
+            border-bottom: none;
+        }
+
+        .metal-code {
+            background: linear-gradient(135deg, #b45309, #92400e);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .metal-details {
+            flex: 1;
+        }
+
+        .metal-name {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .metal-composition {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .metal-usage {
+            font-size: 0.9rem;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .limits-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .limits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .limit-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .limit-title {
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .limit-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ef4444;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .limit-description {
+            color: #374151;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .properties-section {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0891b2;
+        }
+
+        .properties-section h3 {
+            color: #0e7490;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .property-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .property-icon {
+            font-size: 2rem;
+            color: #0891b2;
+            margin-bottom: 10px;
+        }
+
+        .property-title {
+            font-weight: 600;
+            color: #0e7490;
+            margin-bottom: 5px;
+        }
+
+        .property-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .regulations {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .regulations h3 {
+            color: #6b21a8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .regulation-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .regulation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #b45309, #92400e);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(180, 83, 9, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .alloys-grid {
+                grid-template-columns: 1fr;
+            }
+            .limits-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-hammer"></i> Cuivre et Alliages</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2><i class="fas fa-info-circle"></i> Propriétés et Applications</h2>
+                <p>Le cuivre et ses alliages offrent d'excellentes propriétés thermiques et une conductivité remarquable. Traditionnellement utilisés en cuisine, ils nécessitent des précautions strictes en raison de leur potentiel toxique.</p>
+            </div>
+
+            <div class="warning-box">
+                <h3><i class="fas fa-skull-crossbones"></i> Restrictions Critiques d'Usage</h3>
+                <ul class="warning-list">
+                    <li>Étamage obligatoire pour contact direct alimentaire</li>
+                    <li>LMS Cuivre : 5 mg/kg - Limite de sécurité</li>
+                    <li>Interdiction formelle avec aliments acides</li>
+                    <li>Surveillance renforcée du revêtement d'étain</li>
+                </ul>
+            </div>
+
+            <div class="alloys-grid">
+                <div class="alloy-card">
+                    <h3 class="alloy-title"><i class="fas fa-certificate"></i> Cuivre Pur</h3>
+                    <div class="metal-item">
+                        <div class="metal-code">Cu-DHP</div>
+                        <div class="metal-details">
+                            <div class="metal-name">CW024A</div>
+                            <div class="metal-composition">Cuivre désoxydé au phosphore</div>
+                            <div class="metal-usage">Bassines, ustensiles traditionnels</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Cu-ETP</div>
+                        <div class="metal-details">
+                            <div class="metal-name">CW004A</div>
+                            <div class="metal-composition">Cuivre électrolytique raffiné</div>
+                            <div class="metal-usage">Applications haute conductivité</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alloy-card">
+                    <h3 class="alloy-title"><i class="fas fa-tools"></i> Laitons et Bronzes</h3>
+                    <div class="metal-item">
+                        <div class="metal-code">CuZn40</div>
+                        <div class="metal-details">
+                            <div class="metal-name">CW509L - Laiton</div>
+                            <div class="metal-composition">60% Cu + 40% Zn</div>
+                            <div class="metal-usage">Robinetterie, ustensiles</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">CuSn8</div>
+                        <div class="metal-details">
+                            <div class="metal-name">CW453K - Bronze</div>
+                            <div class="metal-composition">92% Cu + 8% Sn</div>
+                            <div class="metal-usage">Moules, ustensiles de précision</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="limits-section">
+                <h2><i class="fas fa-exclamation-triangle"></i> Limites de Migration Critiques</h2>
+                <div class="limits-grid">
+                    <div class="limit-card">
+                        <h4 class="limit-title"><i class="fas fa-flask"></i> Cuivre (Cu)</h4>
+                        <div class="limit-value">5,0</div>
+                        <div class="limit-description">mg/kg - Limite de migration spécifique</div>
+                    </div>
+                    <div class="limit-card">
+                        <h4 class="limit-title"><i class="fas fa-shield-alt"></i> Plomb (Pb)</h4>
+                        <div class="limit-value">0,01</div>
+                        <div class="limit-description">mg/kg - Dans revêtement d'étain</div>
+                    </div>
+                    <div class="limit-card">
+                        <h4 class="limit-title"><i class="fas fa-biohazard"></i> Cadmium (Cd)</h4>
+                        <div class="limit-value">0,005</div>
+                        <div class="limit-description">mg/kg - Contamination interdite</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="properties-section">
+                <h3><i class="fas fa-cogs"></i> Propriétés Techniques</h3>
+                <div class="properties-grid">
+                    <div class="property-item">
+                        <div class="property-icon">🔥</div>
+                        <div class="property-title">Conductivité Thermique</div>
+                        <div class="property-desc">Excellente diffusion de chaleur</div>
+                    </div>
+                    <div class="property-item">
+                        <div class="property-icon">⚡</div>
+                        <div class="property-title">Conductivité Électrique</div>
+                        <div class="property-desc">Seconde après l'argent</div>
+                    </div>
+                    <div class="property-item">
+                        <div class="property-icon">🛡️</div>
+                        <div class="property-title">Propriétés Antimicrobiennes</div>
+                        <div class="property-desc">Action bactéricide naturelle</div>
+                    </div>
+                    <div class="property-item">
+                        <div class="property-icon">🔄</div>
+                        <div class="property-title">Recyclabilité</div>
+                        <div class="property-desc">100% recyclable indéfiniment</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regulations">
+                <h3><i class="fas fa-gavel"></i> Textes Réglementaires</h3>
+                <div class="regulation-item">
+                    <strong>Arrêté du 28 juin 1912</strong><br>
+                    Interdiction du cuivre non étamé au contact direct des aliments
+                </div>
+                <div class="regulation-item">
+                    <strong>Résolution CM/Res(2013)9</strong><br>
+                    Métaux et alliages - Limites de migration spécifiques
+                </div>
+                <div class="regulation-item">
+                    <strong>NF EN 1172</strong><br>
+                    Cuivre et alliages de cuivre - Feuilles et bandes
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="aluminium_alliages.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Aluminium
+        </a>
+        <a href="metaux_emailles.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Émaillés
+        </a>
+    </div>
+
+    <div class="page-number">3</div>
+</body>
+</html>

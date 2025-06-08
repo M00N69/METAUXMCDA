@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aciers Inoxydables - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .intro-section h2 {
+            color: #1e40af;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .series-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .series-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        }
+
+        .series-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .series-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alloy-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .alloy-item:last-child {
+            border-bottom: none;
+        }
+
+        .alloy-code {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .alloy-description {
+            flex: 1;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .properties-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .property-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #10b981;
+        }
+
+        .property-title {
+            font-weight: 600;
+            color: #065f46;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .property-list {
+            list-style: none;
+        }
+
+        .property-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #374151;
+        }
+
+        .property-list li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            width: 20px;
+        }
+
+        .regulations {
+            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .regulations h3 {
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .regulation-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .regulation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .series-grid {
+                grid-template-columns: 1fr;
+            }
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-cogs"></i> Aciers Inoxydables</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2><i class="fas fa-info-circle"></i> Définition et Applications</h2>
+                <p>Les aciers inoxydables sont des alliages fer-carbone contenant au minimum 13% de chrome, conférant une résistance à la corrosion exceptionnelle. Ils constituent la référence en matière de matériaux au contact alimentaire grâce à leur inertie chimique et leur facilité d'entretien.</p>
+            </div>
+
+            <div class="series-grid">
+                <div class="series-card">
+                    <h3 class="series-title"><i class="fas fa-shield-alt"></i> Série 300 - Austénitiques</h3>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 304</div>
+                        <div class="alloy-description">X5CrNi18-10 - Usage général, excellent compromis</div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 316</div>
+                        <div class="alloy-description">X5CrNiMo17-12-2 - Résistance acides renforcée</div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 321</div>
+                        <div class="alloy-description">X6CrNiTi18-10 - Stabilisé au titane</div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 347</div>
+                        <div class="alloy-description">X6CrNiNb18-10 - Stabilisé au niobium</div>
+                    </div>
+                </div>
+
+                <div class="series-card">
+                    <h3 class="series-title"><i class="fas fa-fire"></i> Série 400 - Ferritiques</h3>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 430</div>
+                        <div class="alloy-description">X6Cr17 - Résistance haute température</div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 420</div>
+                        <div class="alloy-description">X20Cr13 - Martensitique, coutellerie</div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">AISI 441</div>
+                        <div class="alloy-description">X2CrTiNb18 - Stabilisé, excellente résistance</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="properties-section">
+                <h2><i class="fas fa-flask"></i> Critères de Conformité</h2>
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <h4 class="property-title"><i class="fas fa-check-circle"></i> Composition Minimale</h4>
+                        <ul class="property-list">
+                            <li>Chrome ≥ 13,0% (résistance corrosion)</li>
+                            <li>Carbone ≤ 0,05% (soudabilité optimale)</li>
+                            <li>Nickel adapté à l'usage acide</li>
+                        </ul>
+                    </div>
+                    <div class="property-card">
+                        <h4 class="property-title"><i class="fas fa-plus-circle"></i> Éléments d'Addition</h4>
+                        <ul class="property-list">
+                            <li>Mo, Ti, Al, Cu ≤ 4% chacun</li>
+                            <li>Ta, Nb, Zr ≤ 1% chacun</li>
+                            <li>Éléments selon EN 10088-1</li>
+                        </ul>
+                    </div>
+                    <div class="property-card">
+                        <h4 class="property-title"><i class="fas fa-wrench"></i> Traitements Spéciaux</h4>
+                        <ul class="property-list">
+                            <li>Nitruration (couche ≤ 0,3mm)</li>
+                            <li>Enrichissement C/N (≤ 30μm)</li>
+                            <li>Kolsterising, Nivox, Expanite</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regulations">
+                <h3><i class="fas fa-gavel"></i> Textes Réglementaires</h3>
+                <div class="regulation-item">
+                    <strong>Arrêté du 13 janvier 1976</strong><br>
+                    Matériaux et objets en acier inoxydable au contact des denrées alimentaires
+                </div>
+                <div class="regulation-item">
+                    <strong>NF A 36-711</strong><br>
+                    Acier inoxydable destiné au contact des denrées alimentaires
+                </div>
+                <div class="regulation-item">
+                    <strong>NF EN 10088-1</strong><br>
+                    Liste des aciers inoxydables et compositions chimiques
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="aluminium_alliages.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Aluminium & Alliages
+        </a>
+    </div>
+
+    <div class="page-number">1</div>
+</body>
+</html>

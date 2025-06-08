@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Méthodes d'Essais - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #7c2d12 0%, #92400e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7c2d12 0%, #92400e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .priority-section {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #ef4444;
+        }
+
+        .priority-section h2 {
+            color: #dc2626;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .priority-hierarchy {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .priority-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .priority-item:not(:last-child)::after {
+            content: '>';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .priority-number {
+            background: #ef4444;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+
+        .simulants-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .simulants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .simulant-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #7c2d12;
+        }
+
+        .simulant-title {
+            font-weight: 600;
+            color: #7c2d12;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .simulant-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .simulant-table th,
+        .simulant-table td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .simulant-table th {
+            background: rgba(124, 45, 18, 0.1);
+            color: #7c2d12;
+            font-weight: 600;
+        }
+
+        .simulant-table td {
+            color: #374151;
+        }
+
+        .conditions-section {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #10b981;
+        }
+
+        .conditions-section h3 {
+            color: #047857;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .condition-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #10b981;
+        }
+
+        .condition-title {
+            font-weight: 600;
+            color: #047857;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .condition-details {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .methods-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .method-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .method-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .method-steps li {
+            counter-increment: step-counter;
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .method-steps li::before {
+            content: counter(step-counter);
+            background: #f59e0b;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .calculations-section {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .calculations-section h3 {
+            color: #6b21a8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formula-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .formula-title {
+            font-weight: 600;
+            color: #6b21a8;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        .formula-explanation {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .standards-section {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .standards-section h3 {
+            color: #1d4ed8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .standards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .standard-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .standard-ref {
+            font-weight: 600;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+
+        .standard-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #7c2d12, #92400e);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(124, 45, 18, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .simulants-grid {
+                grid-template-columns: 1fr;
+            }
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .priority-hierarchy {
+                flex-direction: column;
+            }
+            .priority-item:not(:last-child)::after {
+                content: '⬇';
+                right: 50%;
+                transform: translateX(50%);
+                bottom: -20px;
+                top: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-microscope"></i> Méthodes d'Essais</h1>
+            <p class="subtitle">Conditions d'Analyse et Protocoles de Migration - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="priority-section">
+                <h2><i class="fas fa-trophy"></i> Hiérarchie des Essais</h2>
+                <p>Prévalence des résultats selon l'ordre de priorité décroissant :</p>
+                <div class="priority-hierarchy">
+                    <div class="priority-item">
+                        <div class="priority-number">1</div>
+                        <div><strong>Denrées Alimentaires</strong><br>Essais directs sur produit final</div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-number">2</div>
+                        <div><strong>Simulants</strong><br>Liquides de substitution normalisés</div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-number">3</div>
+                        <div><strong>Composition</strong><br>Analyse matériau seul</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="simulants-section">
+                <h2><i class="fas fa-flask"></i> Simulants de Denrées Alimentaires</h2>
+                <div class="simulants-grid">
+                    <div class="simulant-card">
+                        <h4 class="simulant-title"><i class="fas fa-tint"></i> Métaux Non Revêtus</h4>
+                        <table class="simulant-table">
+                            <tr><th>Application</th><th>Simulant</th></tr>
+                            <tr><td>Toutes denrées (acides)</td><td>Acide citrique 5 g/L</td></tr>
+                            <tr><td>Denrées non acides</td><td>Eau du robinet artificielle</td></tr>
+                            <tr><td>Produits secs</td><td>Pas d'essai migration</td></tr>
+                        </table>
+                    </div>
+                    <div class="simulant-card">
+                        <h4 class="simulant-title"><i class="fas fa-paint-brush"></i> Revêtements Organiques</h4>
+                        <table class="simulant-table">
+                            <tr><th>Application</th><th>Simulant</th></tr>
+                            <tr><td>Denrées acides (pH ≤ 4,5)</td><td>Acide citrique 5 g/L</td></tr>
+                            <tr><td>Denrées non acides</td><td>A, C, D1, D2, E (UE 10/2011)</td></tr>
+                            <tr><td>Migration globale acide</td><td>Éthanol 10% ou Acétique 3%</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conditions-section">
+                <h3><i class="fas fa-thermometer-half"></i> Conditions d'Essais Normalisées</h3>
+                <div class="conditions-grid">
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-clock"></i> Contact Longue Durée</div>
+                        <div class="condition-details">
+                            <strong>10 jours à 40°C</strong><br>
+                            Usage température ambiante prolongé, stockage
+                        </div>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-fire"></i> Remplissage à Chaud</div>
+                        <div class="condition-details">
+                            <strong>2 heures à 70°C</strong><br>
+                            + éventuellement 24h à 40°C
+                        </div>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-utensils"></i> Ustensiles Cuisine</div>
+                        <div class="condition-details">
+                            <strong>2 heures à 70°C</strong><br>
+                            Couverts : 30 min à 70°C
+                        </div>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-snowflake"></i> Service à Froid</div>
+                        <div class="condition-details">
+                            <strong>2 heures à 22°C</strong><br>
+                            Timbales, coupes à glace
+                        </div>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-fire-alt"></i> Cuisson/Ébullition</div>
+                        <div class="condition-details">
+                            <strong>24h à reflux</strong><br>
+                            Après remplissage à chaud
+                        </div>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-title"><i class="fas fa-cookie-bite"></i> Feuilles Cuisson</div>
+                        <div class="condition-details">
+                            <strong>2h à 100°C</strong><br>
+                            + 10 jours à 40°C
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="methods-section">
+                <h2><i class="fas fa-cogs"></i> Protocoles Analytiques</h2>
+                <div class="methods-grid">
+                    <div class="method-card">
+                        <h4 class="method-title"><i class="fas fa-vial"></i> Migration Métaux</h4>
+                        <ol class="method-steps">
+                            <li>Préparation échantillon selon usage prévu</li>
+                            <li>Mise en contact avec simulant approprié</li>
+                            <li>Conditions temps/température normalisées</li>
+                            <li>Usage répété : 3 contacts successifs</li>
+                            <li>Analyse ICP-MS du 3ème contact</li>
+                            <li>Calcul mg/kg avec rapport S/V</li>
+                        </ol>
+                    </div>
+                    <div class="method-card">
+                        <h4 class="method-title"><i class="fas fa-balance-scale"></i> Migration Globale</h4>
+                        <ol class="method-steps">
+                            <li>Pesée initiale de l'échantillon</li>
+                            <li>Contact simulant selon conditions</li>
+                            <li>Évaporation complète du simulant</li>
+                            <li>Pesée du résidu non volatil</li>
+                            <li>Calcul mg/dm² surface contact</li>
+                            <li>Limite : 10 mg/dm² (60 mg/kg enfants)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculations-section">
+                <h3><i class="fas fa-calculator"></i> Formules de Calcul</h3>
+                <div class="formula-card">
+                    <div class="formula-title">Migration Spécifique (mg/kg)</div>
+                    <div class="formula">
+                        M = (C × V × F) / m
+                    </div>
+                    <div class="formula-explanation">
+                        <strong>C</strong> = concentration mesurée (mg/L)<br>
+                        <strong>V</strong> = volume simulant (L)<br>
+                        <strong>F</strong> = facteur de correction<br>
+                        <strong>m</strong> = masse équivalente aliment (kg)
+                    </div>
+                </div>
+                <div class="formula-card">
+                    <div class="formula-title">Rapport Surface/Volume</div>
+                    <div class="formula">
+                        S/V = 6 dm²/kg (valeur conventionnelle)
+                    </div>
+                    <div class="formula-explanation">
+                        Pour objets non remplissables ou rapport complexe.<br>
+                        Méthode "volume enveloppe" pour ustensiles cuisine.
+                    </div>
+                </div>
+            </div>
+
+            <div class="standards-section">
+                <h3><i class="fas fa-book"></i> Normes et Références Techniques</h3>
+                <div class="standards-grid">
+                    <div class="standard-item">
+                        <div class="standard-ref">NF EN 1186 (série)</div>
+                        <div class="standard-desc">Méthodes essais migration globale</div>
+                    </div>
+                    <div class="standard-item">
+                        <div class="standard-ref">EN 13130 (série)</div>
+                        <div class="standard-desc">Migration spécifique substances</div>
+                    </div>
+                    <div class="standard-item">
+                        <div class="standard-ref">NF EN 16889</div>
+                        <div class="standard-desc">Eau du robinet artificielle</div>
+                    </div>
+                    <div class="standard-item">
+                        <div class="standard-ref">CM/Res(2013)9 - Guide</div>
+                        <div class="standard-desc">Méthodes dosage métaux ICP-MS</div>
+                    </div>
+                    <div class="standard-item">
+                        <div class="standard-ref">Règlement UE 10/2011</div>
+                        <div class="standard-desc">Conditions migration plastiques</div>
+                    </div>
+                    <div class="standard-item">
+                        <div class="standard-ref">XP CEN/TS 14234</div>
+                        <div class="standard-desc">Revêtements polymères</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="reglementation_generale.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Réglementation
+        </a>
+        <a href="limites_migration.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Limites
+        </a>
+    </div>
+
+    <div class="page-number">7</div>
+</body>
+</html>

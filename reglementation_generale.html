@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réglementation Générale - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .principles-section {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .principles-section h2 {
+            color: #1d4ed8;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .principle-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .hierarchy-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .hierarchy-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hierarchy-level {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .hierarchy-level.european {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+        }
+
+        .hierarchy-level.national {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+        }
+
+        .hierarchy-level.guidance {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: white;
+        }
+
+        .hierarchy-icon {
+            font-size: 2rem;
+            min-width: 50px;
+        }
+
+        .hierarchy-content {
+            flex: 1;
+        }
+
+        .hierarchy-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .hierarchy-desc {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .texts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .text-category {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+        }
+
+        .text-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .text-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .text-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .text-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-ref {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .text-desc {
+            color: #374151;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .text-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        .enforcement-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .enforcement-section h3 {
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .enforcement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .enforcement-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .enforcement-icon {
+            font-size: 2.5rem;
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+
+        .enforcement-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 5px;
+        }
+
+        .enforcement-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .timeline-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #1e40af);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -45px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .timeline-event {
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .texts-grid {
+                grid-template-columns: 1fr;
+            }
+            .enforcement-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-balance-scale"></i> Cadre Réglementaire</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires - Textes de Référence</p>
+        </div>
+
+        <div class="main-content">
+            <div class="principles-section">
+                <h2><i class="fas fa-shield-alt"></i> Principe Fondamental</h2>
+                <div class="principle-card">
+                    <h3><strong>Article 3 - Règlement (CE) n°1935/2004</strong></h3>
+                    <p>Les matériaux destinés à entrer en contact avec des denrées alimentaires sont fabriqués conformément aux bonnes pratiques afin que, <strong>dans des conditions normales ou prévisibles d'emploi</strong>, ils ne cèdent pas aux denrées des constituants en quantité susceptible :</p>
+                    <ul style="margin-top: 15px; padding-left: 20px;">
+                        <li>• De présenter un <strong>danger pour la santé humaine</strong></li>
+                        <li>• D'entraîner une <strong>modification inacceptable de la composition</strong> de la denrée</li>
+                        <li>• D'<strong>altérer les propriétés organoleptiques</strong> de la denrée alimentaire</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hierarchy-section">
+                <h2><i class="fas fa-sitemap"></i> Hiérarchie Réglementaire</h2>
+                <div class="hierarchy-tree">
+                    <div class="hierarchy-level european">
+                        <div class="hierarchy-icon"><i class="fas fa-flag"></i></div>
+                        <div class="hierarchy-content">
+                            <div class="hierarchy-title">Niveau Européen</div>
+                            <div class="hierarchy-desc">Règlements CE - Application directe dans tous les États membres</div>
+                        </div>
+                    </div>
+                    <div class="hierarchy-level national">
+                        <div class="hierarchy-icon"><i class="fas fa-home"></i></div>
+                        <div class="hierarchy-content">
+                            <div class="hierarchy-title">Niveau National</div>
+                            <div class="hierarchy-desc">Arrêtés ministériels français - Complètent la réglementation européenne</div>
+                        </div>
+                    </div>
+                    <div class="hierarchy-level guidance">
+                        <div class="hierarchy-icon"><i class="fas fa-compass"></i></div>
+                        <div class="hierarchy-content">
+                            <div class="hierarchy-title">Documents d'Orientation</div>
+                            <div class="hierarchy-desc">Résolutions Conseil de l'Europe, normes techniques, fiches DGCCRF</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="texts-grid">
+                <div class="text-category">
+                    <h3 class="text-title"><i class="fas fa-flag"></i> Textes Européens</h3>
+                    <div class="text-item">
+                        <div class="text-ref">Règlement (CE) n°1935/2004</div>
+                        <div class="text-desc">Règlement cadre - Principes généraux des MCDA</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> EUR-Lex</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Règlement (CE) n°2023/2006</div>
+                        <div class="text-desc">Bonnes pratiques de fabrication des MCDA</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> EUR-Lex</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Règlement (UE) n°10/2011</div>
+                        <div class="text-desc">Matériaux plastiques - Méthodes d'essais</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> EUR-Lex</a>
+                    </div>
+                </div>
+
+                <div class="text-category">
+                    <h3 class="text-title"><i class="fas fa-home"></i> Textes Français</h3>
+                    <div class="text-item">
+                        <div class="text-ref">Arrêté 13 janvier 1976</div>
+                        <div class="text-desc">Aciers inoxydables - Critères de composition</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> Légifrance</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Arrêté 27 août 1987</div>
+                        <div class="text-desc">Aluminium et alliages - Spécifications techniques</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> Légifrance</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Arrêté 15 novembre 1945</div>
+                        <div class="text-desc">Matériaux pour instruments de mesure</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> Légifrance</a>
+                    </div>
+                </div>
+
+                <div class="text-category">
+                    <h3 class="text-title"><i class="fas fa-compass"></i> Documents Techniques</h3>
+                    <div class="text-item">
+                        <div class="text-ref">CM/Res(2013)9</div>
+                        <div class="text-desc">Métaux et alliages - Conseil de l'Europe</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> COE</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Fiches DGCCRF</div>
+                        <div class="text-desc">Critères de vérification par type de matériau</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> Economie.gouv.fr</a>
+                    </div>
+                    <div class="text-item">
+                        <div class="text-ref">Normes EN/NF</div>
+                        <div class="text-desc">Spécifications techniques par matériau</div>
+                        <a href="#" class="text-link"><i class="fas fa-external-link-alt"></i> AFNOR</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="enforcement-section">
+                <h3><i class="fas fa-user-shield"></i> Responsabilités et Contrôles</h3>
+                <div class="enforcement-grid">
+                    <div class="enforcement-item">
+                        <div class="enforcement-icon">🏭</div>
+                        <div class="enforcement-title">Fabricants</div>
+                        <div class="enforcement-desc">Conformité, DoC, traçabilité</div>
+                    </div>
+                    <div class="enforcement-item">
+                        <div class="enforcement-icon">🏪</div>
+                        <div class="enforcement-title">Distributeurs</div>
+                        <div class="enforcement-desc">Vérification, stockage adéquat</div>
+                    </div>
+                    <div class="enforcement-item">
+                        <div class="enforcement-icon">🔬</div>
+                        <div class="enforcement-title">DGCCRF</div>
+                        <div class="enforcement-desc">Contrôles officiels, sanctions</div>
+                    </div>
+                    <div class="enforcement-item">
+                        <div class="enforcement-icon">🍽️</div>
+                        <div class="enforcement-title">IAA</div>
+                        <div class="enforcement-desc">HACCP, analyse des risques</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-section">
+                <h2><i class="fas fa-clock"></i> Évolution Réglementaire Clé</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1945</div>
+                        <div class="timeline-event">Arrêté instruments de mesure - Première réglementation métaux</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1976</div>
+                        <div class="timeline-event">Arrêté aciers inoxydables - Critères de composition chrome ≥13%</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1987</div>
+                        <div class="timeline-event">Arrêté aluminium - Spécifications de pureté et alliages</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2004</div>
+                        <div class="timeline-event">Règlement cadre 1935/2004 - Harmonisation européenne</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2013</div>
+                        <div class="timeline-event">Résolution CM/Res(2013)9 - Limites de migration métaux</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2017</div>
+                        <div class="timeline-event">Fiches DGCCRF v02 - Critères de vérification détaillés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="autres_metaux.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Autres
+        </a>
+        <a href="methodes_essais.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Essais
+        </a>
+    </div>
+
+    <div class="page-number">6</div>
+</body>
+</html>

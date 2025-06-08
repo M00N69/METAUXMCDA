@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autres Métaux - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #0f766e;
+        }
+
+        .intro-section h2 {
+            color: #134e4a;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .category-card.precious::before {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        }
+
+        .category-card.coating::before {
+            background: linear-gradient(90deg, #6b7280, #374151);
+        }
+
+        .category-card.specialty::before {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #134e4a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metal-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .metal-item:last-child {
+            border-bottom: none;
+        }
+
+        .metal-code {
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .precious .metal-code {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        }
+
+        .coating .metal-code {
+            background: linear-gradient(135deg, #6b7280, #374151);
+        }
+
+        .specialty .metal-code {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .metal-details {
+            flex: 1;
+        }
+
+        .metal-name {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .metal-purity {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .metal-usage {
+            font-size: 0.9rem;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .limits-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .limits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .limits-table th,
+        .limits-table td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .limits-table th {
+            background: linear-gradient(135deg, #0f766e, #134e4a);
+            color: white;
+            font-weight: 600;
+        }
+
+        .limits-table td {
+            color: #374151;
+        }
+
+        .limits-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .warning-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .warning-section h3 {
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .warning-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .applications-section {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0284c7;
+        }
+
+        .applications-section h3 {
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .application-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .application-icon {
+            font-size: 2.5rem;
+            color: #0284c7;
+            margin-bottom: 10px;
+        }
+
+        .application-title {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 5px;
+        }
+
+        .application-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .regulations {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .regulations h3 {
+            color: #1d4ed8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .regulation-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .regulation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #0f766e, #134e4a);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(15, 118, 110, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .warning-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-gem"></i> Autres Métaux</h1>
+            <p class="subtitle">Métaux Précieux, Revêtements et Applications Spéciales - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2><i class="fas fa-info-circle"></i> Métaux Spécialisés</h2>
+                <p>Cette catégorie regroupe les métaux précieux, les revêtements métalliques spéciaux et les alliages haute performance utilisés dans des applications alimentaires spécifiques nécessitant des propriétés particulières.</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card precious">
+                    <h3 class="category-title"><i class="fas fa-crown"></i> Métaux Précieux</h3>
+                    <div class="metal-item">
+                        <div class="metal-code">Au</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Or</div>
+                            <div class="metal-purity">Pureté min. 99,9%</div>
+                            <div class="metal-usage">Ustensiles de prestige, décoration</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Ag</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Argent</div>
+                            <div class="metal-purity">Titre min. 92,5%</div>
+                            <div class="metal-usage">Orfèvrerie, couverts, plateaux</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Pt</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Platine</div>
+                            <div class="metal-purity">Pureté min. 95%</div>
+                            <div class="metal-usage">Applications haute température</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card coating">
+                    <h3 class="category-title"><i class="fas fa-layer-group"></i> Revêtements</h3>
+                    <div class="metal-item">
+                        <div class="metal-code">Sn</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Étain</div>
+                            <div class="metal-purity">Pureté ≥ 99,9%</div>
+                            <div class="metal-usage">Fer blanc, conserves</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Cr</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Chrome dur</div>
+                            <div class="metal-purity">Dépôt électrolytique</div>
+                            <div class="metal-usage">Revêtement anti-usure</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Zn</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Zinc</div>
+                            <div class="metal-purity">Usage limité</div>
+                            <div class="metal-usage">Galvanisation (restrictions)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card specialty">
+                    <h3 class="category-title"><i class="fas fa-atom"></i> Alliages Spéciaux</h3>
+                    <div class="metal-item">
+                        <div class="metal-code">Ti</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Titane</div>
+                            <div class="metal-purity">Ti-6Al-4V</div>
+                            <div class="metal-usage">Équipements haute performance</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Nb</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Niobium</div>
+                            <div class="metal-purity">Applications spéciales</div>
+                            <div class="metal-usage">Équipements chimiques</div>
+                        </div>
+                    </div>
+                    <div class="metal-item">
+                        <div class="metal-code">Ta</div>
+                        <div class="metal-details">
+                            <div class="metal-name">Tantale</div>
+                            <div class="metal-purity">Résistance extrême</div>
+                            <div class="metal-usage">Conditions agressives</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="limits-section">
+                <h2><i class="fas fa-table"></i> Limites de Migration Spécifiques Complètes</h2>
+                <table class="limits-table">
+                    <thead>
+                        <tr>
+                            <th>Élément</th>
+                            <th>Symbole</th>
+                            <th>LMS (mg/kg)</th>
+                            <th>Observations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Argent</td><td>Ag</td><td>0,08</td><td>Métaux précieux</td></tr>
+                        <tr><td>Étain</td><td>Sn</td><td>1,2</td><td>Sauf règlement 1881/2006</td></tr>
+                        <tr><td>Zinc</td><td>Zn</td><td>5,0</td><td>Usage limité acides</td></tr>
+                        <tr><td>Chrome VI</td><td>Cr VI</td><td>0,025</td><td>Forme hexavalente</td></tr>
+                        <tr><td>Antimoine</td><td>Sb</td><td>0,04</td><td>Revêtements spéciaux</td></tr>
+                        <tr><td>Plomb</td><td>Pb</td><td>0,010</td><td>Contaminant critique</td></tr>
+                        <tr><td>Cadmium</td><td>Cd</td><td>0,005</td><td>Toxicité élevée</td></tr>
+                        <tr><td>Mercure</td><td>Hg</td><td>0,003</td><td>Interdit en pratique</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Restrictions et Précautions</h3>
+                <div class="warning-grid">
+                    <div class="warning-item">
+                        <div class="warning-title"><i class="fas fa-ban"></i> Zinc</div>
+                        <div class="warning-desc">Interdit au contact direct sauf produits secs non acides (chocolaterie, confiserie)</div>
+                    </div>
+                    <div class="warning-item">
+                        <div class="warning-title"><i class="fas fa-thermometer-half"></i> Température</div>
+                        <div class="warning-desc">Limitations d'usage à haute température pour certains revêtements</div>
+                    </div>
+                    <div class="warning-item">
+                        <div class="warning-title"><i class="fas fa-tint"></i> pH Acide</div>
+                        <div class="warning-desc">Restrictions renforcées pour aliments acides (pH < 4,5)</div>
+                    </div>
+                    <div class="warning-item">
+                        <div class="warning-title"><i class="fas fa-clock"></i> Durée Contact</div>
+                        <div class="warning-desc">Limitations temporelles selon le type de métal et d'aliment</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="applications-section">
+                <h3><i class="fas fa-industry"></i> Domaines d'Application</h3>
+                <div class="applications-grid">
+                    <div class="application-item">
+                        <div class="application-icon">🥫</div>
+                        <div class="application-title">Conserverie</div>
+                        <div class="application-desc">Fer blanc, soudures étain-argent</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="application-icon">🍽️</div>
+                        <div class="application-title">Orfèvrerie</div>
+                        <div class="application-desc">Argent, or, services de table</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="application-icon">⚙️</div>
+                        <div class="application-title">Équipements</div>
+                        <div class="application-desc">Titane, tantale, conditions extrêmes</div>
+                    </div>
+                    <div class="application-item">
+                        <div class="application-icon">🔬</div>
+                        <div class="application-title">Laboratoire</div>
+                        <div class="application-desc">Platine, analyse chimique</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regulations">
+                <h3><i class="fas fa-gavel"></i> Références Réglementaires</h3>
+                <div class="regulation-item">
+                    <strong>Résolution CM/Res(2013)9</strong><br>
+                    Métaux et alliages - Conseil de l'Europe - Limites de migration
+                </div>
+                <div class="regulation-item">
+                    <strong>Arrêté du 28 juin 1912</strong><br>
+                    Restrictions zinc et métaux au contact alimentaire
+                </div>
+                <div class="regulation-item">
+                    <strong>EN 610 - Étain et alliages</strong><br>
+                    Spécifications techniques pour l'étain en lingot
+                </div>
+                <div class="regulation-item">
+                    <strong>DGCCRF - Matériaux MCDA</strong><br>
+                    Guide d'application et contrôles officiels
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="metaux_emailles.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Émaillés
+        </a>
+        <a href="aciers_inoxydables.html" class="nav-btn">
+            <i class="fas fa-home"></i> Accueil
+        </a>
+    </div>
+
+    <div class="page-number">5</div>
+</body>
+</html>

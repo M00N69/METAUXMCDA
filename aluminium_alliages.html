@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aluminium et Alliages - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .intro-section h2 {
+            color: #92400e;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 1px solid #f87171;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ef4444;
+        }
+
+        .warning-box h3 {
+            color: #dc2626;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .type-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .type-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alloy-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .alloy-item:last-child {
+            border-bottom: none;
+        }
+
+        .alloy-code {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .alloy-details {
+            flex: 1;
+        }
+
+        .alloy-name {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .alloy-composition {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .alloy-usage {
+            font-size: 0.9rem;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .specs-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .spec-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #0891b2;
+        }
+
+        .spec-title {
+            font-weight: 600;
+            color: #0e7490;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .spec-table th {
+            background: rgba(8, 145, 178, 0.1);
+            color: #0e7490;
+            font-weight: 600;
+        }
+
+        .spec-table td {
+            color: #374151;
+        }
+
+        .regulations {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .regulations h3 {
+            color: #6b21a8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .regulation-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .regulation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .types-grid {
+                grid-template-columns: 1fr;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-cube"></i> Aluminium et Alliages</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2><i class="fas fa-info-circle"></i> Caractéristiques Générales</h2>
+                <p>L'aluminium et ses alliages offrent une excellente résistance à la corrosion et une légèreté exceptionnelle. Très utilisés dans l'industrie alimentaire, ils nécessitent néanmoins des précautions d'usage en contact avec certains aliments.</p>
+            </div>
+
+            <div class="warning-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> Restrictions d'Usage Important</h3>
+                <p><strong>LMS Aluminium : 1 mg/kg</strong> - Usage limité pour aliments acides (pH < 4,5). Revêtements recommandés pour contact direct prolongé.</p>
+            </div>
+
+            <div class="types-grid">
+                <div class="type-card">
+                    <h3 class="type-title"><i class="fas fa-certificate"></i> Aluminium Pur</h3>
+                    <div class="alloy-item">
+                        <div class="alloy-code">EN AW-1050A</div>
+                        <div class="alloy-details">
+                            <div class="alloy-name">Aluminium 99,5%</div>
+                            <div class="alloy-composition">Al ≥ 99,5%, Fe+Si < 0,5%</div>
+                            <div class="alloy-usage">Feuilles, barquettes, emballages légers</div>
+                        </div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">EN AW-1070A</div>
+                        <div class="alloy-details">
+                            <div class="alloy-name">Aluminium 99,7%</div>
+                            <div class="alloy-composition">Al ≥ 99,7%, Fe+Si < 0,3%</div>
+                            <div class="alloy-usage">Applications haute pureté</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="type-card">
+                    <h3 class="type-title"><i class="fas fa-tools"></i> Alliages d'Aluminium</h3>
+                    <div class="alloy-item">
+                        <div class="alloy-code">EN AW-3003</div>
+                        <div class="alloy-details">
+                            <div class="alloy-name">AlMn1Cu</div>
+                            <div class="alloy-composition">Al + 1,2% Mn + 0,12% Cu</div>
+                            <div class="alloy-usage">Ustensiles de cuisine, casseroles</div>
+                        </div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">EN AW-5754</div>
+                        <div class="alloy-details">
+                            <div class="alloy-name">AlMg3</div>
+                            <div class="alloy-composition">Al + 3% Mg</div>
+                            <div class="alloy-usage">Applications marines, citernes</div>
+                        </div>
+                    </div>
+                    <div class="alloy-item">
+                        <div class="alloy-code">EN AW-6082</div>
+                        <div class="alloy-details">
+                            <div class="alloy-name">AlSi1MgMn</div>
+                            <div class="alloy-composition">Al + Si + Mg + Mn</div>
+                            <div class="alloy-usage">Profilés, structures</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs-section">
+                <h2><i class="fas fa-clipboard-list"></i> Spécifications Techniques</h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h4 class="spec-title"><i class="fas fa-flask"></i> Aluminium Pur</h4>
+                        <table class="spec-table">
+                            <tr><th>Élément</th><th>Limite max (%)</th></tr>
+                            <tr><td>Fe + Si</td><td>< 1,0</td></tr>
+                            <tr><td>Ti</td><td>≤ 0,15</td></tr>
+                            <tr><td>Cr, Zn, Cu, Mn, Mg, Ni, Sn</td><td>≤ 0,10 chacun</td></tr>
+                            <tr><td>Pb, Tl, Be</td><td>≤ 0,05 chacun</td></tr>
+                        </table>
+                    </div>
+                    <div class="spec-card">
+                        <h4 class="spec-title"><i class="fas fa-cogs"></i> Alliages d'Aluminium</h4>
+                        <table class="spec-table">
+                            <tr><th>Élément</th><th>Limite max (%)</th></tr>
+                            <tr><td>Si</td><td>≤ 13,5</td></tr>
+                            <tr><td>Mg</td><td>≤ 11,0</td></tr>
+                            <tr><td>Mn</td><td>≤ 4,0</td></tr>
+                            <tr><td>Fe</td><td>≤ 2,0</td></tr>
+                            <tr><td>Ni</td><td>≤ 3,0</td></tr>
+                            <tr><td>Cu</td><td>≤ 0,6</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regulations">
+                <h3><i class="fas fa-gavel"></i> Textes Réglementaires</h3>
+                <div class="regulation-item">
+                    <strong>Arrêté du 27 août 1987</strong><br>
+                    Matériaux et objets en aluminium au contact des denrées alimentaires
+                </div>
+                <div class="regulation-item">
+                    <strong>NF EN 601</strong><br>
+                    Composition chimique des pièces moulées destinées au contact alimentaire
+                </div>
+                <div class="regulation-item">
+                    <strong>NF EN 602</strong><br>
+                    Produits corroyés pour fabrication d'articles alimentaires
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="aciers_inoxydables.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Aciers
+        </a>
+        <a href="cuivre_alliages.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Cuivre
+        </a>
+    </div>
+
+    <div class="page-number">2</div>
+</body>
+</html>

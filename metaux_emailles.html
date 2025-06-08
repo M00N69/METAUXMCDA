@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métaux Émaillés - MCDA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="2" height="2"><circle cx="1" cy="1" r="0.3" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-left: 5px solid #7c3aed;
+        }
+
+        .intro-section h2 {
+            color: #5b21b6;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .material-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #5b21b6);
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .material-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #5b21b6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .material-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .material-item:last-child {
+            border-bottom: none;
+        }
+
+        .material-code {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .material-details {
+            flex: 1;
+        }
+
+        .material-name {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+
+        .material-composition {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .material-usage {
+            font-size: 0.9rem;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .requirements-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .requirement-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .requirement-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .requirement-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .requirement-table th,
+        .requirement-table td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #f3e8ff;
+        }
+
+        .requirement-table th {
+            background: rgba(124, 58, 237, 0.1);
+            color: #5b21b6;
+            font-weight: 600;
+        }
+
+        .requirement-table td {
+            color: #374151;
+        }
+
+        .benefits-section {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #10b981;
+        }
+
+        .benefits-section h3 {
+            color: #047857;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit-title {
+            font-weight: 600;
+            color: #047857;
+            margin-bottom: 5px;
+        }
+
+        .benefit-desc {
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .precautions-section {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ef4444;
+        }
+
+        .precautions-section h3 {
+            color: #dc2626;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .precaution-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .precaution-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .precaution-icon {
+            color: #ef4444;
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .regulations {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .regulations h3 {
+            color: #1d4ed8;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .regulation-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .regulation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .page-number {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-palette"></i> Métaux Émaillés</h1>
+            <p class="subtitle">Matériaux au Contact des Denrées Alimentaires - MCDA</p>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2><i class="fas fa-info-circle"></i> Principe et Avantages</h2>
+                <p>Les métaux émaillés combinent la robustesse du métal avec l'inertie chimique de l'émail vitrifié. Cette technologie offre une excellente protection contre la corrosion et une surface hygiénique idéale pour le contact alimentaire.</p>
+            </div>
+
+            <div class="materials-grid">
+                <div class="material-card">
+                    <h3 class="material-title"><i class="fas fa-fire"></i> Fonte Émaillée</h3>
+                    <div class="material-item">
+                        <div class="material-code">EN-GJL-200</div>
+                        <div class="material-details">
+                            <div class="material-name">Fonte lamellaire</div>
+                            <div class="material-composition">Fer + 2,1-4% C + émail vitrifié</div>
+                            <div class="material-usage">Cocottes, faitouts, ustensiles tradition</div>
+                        </div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-code">EN-GJS-500-7</div>
+                        <div class="material-details">
+                            <div class="material-name">Fonte sphéroïdale</div>
+                            <div class="material-composition">Graphite sphéroïdal + émail</div>
+                            <div class="material-usage">Articles haute résistance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-card">
+                    <h3 class="material-title"><i class="fas fa-industry"></i> Acier Émaillé</h3>
+                    <div class="material-item">
+                        <div class="material-code">DC01EK</div>
+                        <div class="material-details">
+                            <div class="material-name">Acier doux émaillé</div>
+                            <div class="material-composition">Acier faible carbone + émail</div>
+                            <div class="material-usage">Casseroles, plats à four</div>
+                        </div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-code">DC04EK</div>
+                        <div class="material-details">
+                            <div class="material-name">Acier extra-doux émaillé</div>
+                            <div class="material-composition">Emboutissage profond + émail</div>
+                            <div class="material-usage">Vaisselle, articles ménagers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="requirements-section">
+                <h2><i class="fas fa-clipboard-check"></i> Exigences de l'Émail</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-card">
+                        <h4 class="requirement-title"><i class="fas fa-flask"></i> Limites de Migration</h4>
+                        <table class="requirement-table">
+                            <tr><th>Élément</th><th>LMS (mg/kg)</th></tr>
+                            <tr><td>Plomb (Pb)</td><td>0,01</td></tr>
+                            <tr><td>Cadmium (Cd)</td><td>0,005</td></tr>
+                            <tr><td>Chrome VI (Cr VI)</td><td>0,025</td></tr>
+                            <tr><td>Antimoine (Sb)</td><td>0,04</td></tr>
+                        </table>
+                    </div>
+                    <div class="requirement-card">
+                        <h4 class="requirement-title"><i class="fas fa-shield-alt"></i> Résistance Mécanique</h4>
+                        <table class="requirement-table">
+                            <tr><th>Propriété</th><th>Exigence</th></tr>
+                            <tr><td>Résistance écaillage</td><td>Obligatoire</td></tr>
+                            <tr><td>Adhérence émail</td><td>Excellente</td></tr>
+                            <tr><td>Résistance thermique</td><td>≥ 250°C</td></tr>
+                            <tr><td>Résistance chocs</td><td>Testée ISO</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="benefits-section">
+                <h3><i class="fas fa-star"></i> Avantages des Métaux Émaillés</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🛡️</div>
+                        <div class="benefit-title">Inertie Chimique</div>
+                        <div class="benefit-desc">Aucune migration métallique</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🧼</div>
+                        <div class="benefit-title">Facilité d'Entretien</div>
+                        <div class="benefit-desc">Surface lisse, non poreuse</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔥</div>
+                        <div class="benefit-title">Résistance Thermique</div>
+                        <div class="benefit-desc">Haute température stable</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎨</div>
+                        <div class="benefit-title">Esthétique Durable</div>
+                        <div class="benefit-desc">Couleurs et aspect stables</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⚡</div>
+                        <div class="benefit-title">Conductivité</div>
+                        <div class="benefit-desc">Métal sous-jacent conservé</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🦠</div>
+                        <div class="benefit-title">Hygiène</div>
+                        <div class="benefit-desc">Surface antibactérienne</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="precautions-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Précautions d'Usage</h3>
+                <div class="precaution-item">
+                    <div class="precaution-icon"><i class="fas fa-hammer"></i></div>
+                    <div>Éviter les chocs thermiques brutaux pouvant provoquer l'écaillage</div>
+                </div>
+                <div class="precaution-item">
+                    <div class="precaution-icon"><i class="fas fa-utensils"></i></div>
+                    <div>Utiliser des ustensiles non métalliques pour préserver l'émail</div>
+                </div>
+                <div class="precaution-item">
+                    <div class="precaution-icon"><i class="fas fa-eye"></i></div>
+                    <div>Contrôler régulièrement l'intégrité du revêtement émaillé</div>
+                </div>
+                <div class="precaution-item">
+                    <div class="precaution-icon"><i class="fas fa-ban"></i></div>
+                    <div>Cesser l'usage alimentaire en cas d'écaillage visible</div>
+                </div>
+            </div>
+
+            <div class="regulations">
+                <h3><i class="fas fa-gavel"></i> Textes Réglementaires</h3>
+                <div class="regulation-item">
+                    <strong>Résolution CM/Res(2013)9</strong><br>
+                    Métaux et alliages - Limites spécifiques pour émaux
+                </div>
+                <div class="regulation-item">
+                    <strong>NF EN 15284</strong><br>
+                    Ustensiles de cuisine métalliques - Exigences de sécurité
+                </div>
+                <div class="regulation-item">
+                    <strong>ISO 28706</strong><br>
+                    Émaux vitrifiés - Détermination de la libération du plomb et cadmium
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="cuivre_alliages.html" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Cuivre
+        </a>
+        <a href="autres_metaux.html" class="nav-btn">
+            <i class="fas fa-arrow-right"></i> Autres
+        </a>
+    </div>
+
+    <div class="page-number">4</div>
+</body>
+</html>
